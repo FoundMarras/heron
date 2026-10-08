@@ -14,8 +14,6 @@ W_REPLY_TO_MISMATCH = 2
 PHISHING_THRESHOLD = 5
 SUSPICIOUS_THRESHOLD = 3
 
-scores = {}
-verdicts = []
 
 KEYWORDS = ["urgent", "verify", "suspended", "password", "expires", "act now",
             "congratulations", "winner", "claim", "immediately", "gift card"]
@@ -23,6 +21,8 @@ KEYWORDS = ["urgent", "verify", "suspended", "password", "expires", "act now",
 def check_mail(folder, flagged=None):
     if flagged is None:
         flagged = []
+    scores = {}
+    verdicts = []
     files = os.listdir(folder)
     for fn in files:
         if not fn.endswith(".eml"):
@@ -81,6 +81,7 @@ def check_mail(folder, flagged=None):
     out.write(str(verdicts))
     out.close()
     print("flagged:", flagged)
+    return verdicts
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
