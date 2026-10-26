@@ -32,14 +32,20 @@ def check_mail(folder, flagged=None):
             raw = f.read()
             
         s = 0
-        try:
-            frm = re.search("From: (.*)", raw).group(1)
-        except:
+
+        frm = re.search("From: (.*)", raw)
+        if frm is None:
             frm = "?"
-        try:
-            subj = re.search("Subject: (.*)", raw).group(1)
-        except:
+        else:
+            frm = frm.group(1)
+
+
+        subj = re.search("Subject: (.*)", raw)
+        if subj is None:
             subj = "?"
+        else:
+            subj = subj.group(1)
+            
         low = raw.lower()
         for kw in KEYWORDS:
             if kw in low:
